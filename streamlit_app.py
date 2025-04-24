@@ -26,13 +26,16 @@ if st.button("Check Similarity"):
                 result = response.json()
                 score = result['similarity score']
 
-                # Interpretation logic
-                if score >= 0.7:
-                    st.success(f"Similarity Score: **{score}** — The texts are **similar**")
-                elif score >= 0.4:
+                # Interpretation logic for normalized score
+                if score >= 0.8:
+                    st.success(f"Similarity Score: **{score}** — The texts are **highly similar**")
+                elif score >= 0.5:
                     st.info(f"Similarity Score: **{score}** — The texts are **somewhat related**")
+                elif score >= 0.3:
+                    st.warning(f"Similarity Score: **{score}** — The texts have **low similarity**")
                 else:
-                    st.warning(f"Similarity Score: **{score}** — The texts are **not similar**")
+                    st.error(f"Similarity Score: **{score}** — The texts are **not similar**")
+
 
             else:
                 st.error("Something went wrong. Please try again.")
@@ -40,4 +43,4 @@ if st.button("Check Similarity"):
         except Exception as e:
             st.error(f"Error: {e}")
 st.markdown("---")
-st.caption("Note: A similarity score close to 1.0 means high similarity. Score below 0.4 usually means no meaningful semantic overlap.")
+st.caption("Note: A normalized similarity score close to 1.0 means strong semantic similarity. Scores below 0.3 generally indicate little to no semantic overlap.")
